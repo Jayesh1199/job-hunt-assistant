@@ -1,13 +1,8 @@
 from crewai import Agent, Task
-from langchain_google_genai import ChatGoogleGenerativeAI
 from utils.config import GEMINI_API_KEY
+import os
 
-# Create the LLM instance powered by Gemini
-llm = ChatGoogleGenerativeAI(
-    model="gemini-3.1-flash-lite",
-    google_api_key=GEMINI_API_KEY
-)
-
+os.environ["GEMINI_API_KEY"] = GEMINI_API_KEY or ""
 
 def get_jd_analyst_agent():
     return Agent(
@@ -18,7 +13,7 @@ def get_jd_analyst_agent():
             "reading and breaking down job postings. You help job seekers understand "
             "exactly what employers are looking for."
         ),
-        llm=llm,
+        llm="gemini/gemini-2.0-flash",
         verbose=True
     )
 
