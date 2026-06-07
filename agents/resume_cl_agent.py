@@ -1,14 +1,8 @@
 from crewai import Agent, Task
-from langchain_google_genai import ChatGoogleGenerativeAI
 from utils.config import GEMINI_API_KEY
+import os
 
-# Slightly higher temperature than JD agent for more creative writing
-llm = ChatGoogleGenerativeAI(
-    model="gemini-3.1-flash-lite",
-    google_api_key=GEMINI_API_KEY,
-    temperature=0.7
-)
-
+os.environ["GEMINI_API_KEY"] = GEMINI_API_KEY or ""
 
 def get_resume_cl_agent():
     return Agent(
@@ -20,7 +14,7 @@ def get_resume_cl_agent():
             "to highlight relevant skills and craft compelling cover letters that get "
             "candidates noticed by federal hiring managers."
         ),
-        llm=llm,
+        llm="gemini/gemini-2.0-flash",
         verbose=True
     )
 
