@@ -31,8 +31,8 @@ location = st.text_input("Location", value="remote")
 st.subheader("👤 Your Information")
 
 # ── Resume Upload ─────────────────────────────────────────────
-st.markdown("#### 📄 Upload Your Resume")
-uploaded_file = st.file_uploader("Choose a PDF file", type=["pdf"])
+st.markdown("#### 📄 Upload Your Resume (PDF)")
+uploaded_file = st.file_uploader("Choose your resume PDF", type=["pdf"])
 
 resume_text = ""
 
@@ -43,25 +43,21 @@ if uploaded_file is not None:
     st.success("✅ Resume uploaded and extracted successfully!")
     with st.expander("Preview extracted resume text"):
         st.text(resume_text[:1000] + "..." if len(resume_text) > 1000 else resume_text)
-else:
-    resume_text = st.text_area(
-        "Or paste your resume text here",
-        height=200,
-        placeholder="Paste your full resume text here..."
-    )
 
 user_bio = st.text_area(
     "Short Bio",
     height=100,
-    placeholder="e.g. I'm a data professional with 3 years of experience in SQL and Python..."
+    placeholder="e.g. I'm a data professional with 3 years of experience in SQL and Python, passionate about public service..."
 )
 
 st.divider()
 
 # ── Step 1: Fetch Jobs Button ─────────────────────────────────
 if st.button("🔍 Search Jobs", type="primary"):
-    if not resume_text or not user_bio:
-        st.warning("⚠️ Please provide your resume and bio before searching.")
+    if not resume_text:
+        st.warning("⚠️ Please upload your resume PDF before searching.")
+    elif not user_bio:
+        st.warning("⚠️ Please fill in your short bio before searching.")
     else:
         with st.spinner("Fetching jobs from USAJobs..."):
             jobs = fetch_usajobs(keyword, location, results_per_page=5)
