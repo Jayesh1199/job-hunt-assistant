@@ -1,14 +1,8 @@
 from crewai import Agent, Task
-from langchain_google_genai import ChatGoogleGenerativeAI
 from utils.config import GEMINI_API_KEY
+import os
 
-# Using gemini-3.1-flash-lite (same as other agents for quota consistency)
-llm = ChatGoogleGenerativeAI(
-    model="gemini-3.1-flash-lite",
-    google_api_key=GEMINI_API_KEY,
-    temperature=0.8
-)
-
+os.environ["GEMINI_API_KEY"] = GEMINI_API_KEY or ""
 
 def get_messaging_agent():
     return Agent(
@@ -20,7 +14,7 @@ def get_messaging_agent():
             "how to write messages that are professional, concise, and hard to ignore. "
             "You specialize in government and federal job applications."
         ),
-        llm=llm,
+        llm="gemini/gemini-2.0-flash",
         verbose=True
     )
 
