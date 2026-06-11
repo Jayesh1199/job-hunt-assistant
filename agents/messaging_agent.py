@@ -1,7 +1,6 @@
 from crewai import Agent, Task
 from utils.config import GEMINI_API_KEY
 import os
-
 os.environ["GEMINI_API_KEY"] = GEMINI_API_KEY or ""
 
 def get_messaging_agent():
@@ -14,10 +13,9 @@ def get_messaging_agent():
             "how to write messages that are professional, concise, and hard to ignore. "
             "You specialize in government and federal job applications."
         ),
-        llm="gemini/gemini-2.0-flash",
+        llm="gemini/gemini-2.0-flash-lite",
         verbose=True
     )
-
 
 def create_messaging_task(agent, job_summary, agency, user_bio):
     return Task(
