@@ -1,7 +1,6 @@
 from crewai import Agent, Task
 from utils.config import GEMINI_API_KEY
 import os
-
 os.environ["GEMINI_API_KEY"] = GEMINI_API_KEY or ""
 
 def get_resume_cl_agent():
@@ -14,10 +13,9 @@ def get_resume_cl_agent():
             "to highlight relevant skills and craft compelling cover letters that get "
             "candidates noticed by federal hiring managers."
         ),
-        llm="gemini/gemini-2.0-flash",
+        llm="gemini/gemini-2.0-flash-lite",
         verbose=True
     )
-
 
 def create_resume_cl_task(agent, job_summary, resume_text):
     return Task(
