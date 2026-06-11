@@ -101,11 +101,15 @@ if "jobs" in st.session_state:
                 st.subheader(f"📝 {title} at {agency}")
 
                 with st.spinner(f"Running AI agents for {title}... this may take a minute!"):
-                    result = run_pipeline(
-                        job_data=job,
-                        resume_text=st.session_state["resume_text"],
-                        user_bio=st.session_state["user_bio"]
-                    )
+                    try:
+                        result = run_pipeline(
+                            job_data=job,
+                            resume_text=st.session_state["resume_text"],
+                            user_bio=st.session_state["user_bio"]
+                        )
+                    except Exception as e:
+                        st.error(f"Pipeline failed: {type(e).__name__}: {str(e)}")
+                        st.stop()
 
                 st.markdown(result)
                 st.divider()
